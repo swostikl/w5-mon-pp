@@ -42,6 +42,28 @@ const getUserById = async (req, res) => {
 };
 
 // PUT /Users/:userId
+// const updateUser = async (req, res) => {
+//   const { userId } = req.params;
+
+//   if (!mongoose.Types.ObjectId.isValid(userId)) {
+//     return res.status(400).json({ message: "Invalid User ID" });
+//   }
+
+//   try {
+//     const updatedUser = await User.findOneAndUpdate(
+//         { _id: userId },
+//         { ...req.body },
+//         { new: true }
+//     );
+//     if (updatedUser) {
+//       res.status(200).json(updatedUser);
+//     } else {
+//       res.status(404).json({ message: "User not found" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: "Failed to update User" });
+//   }
+// };
 const updateUser = async (req, res) => {
   const { userId } = req.params;
 
@@ -50,18 +72,18 @@ const updateUser = async (req, res) => {
   }
 
   try {
-    const updatedUser = await User.findOneAndUpdate(
-        { _id: userId },
-        { ...req.body },
-        { new: true }
-    );
+    const updatedUser = await User.findOneAndReplace(
+     { _id: userId },
+     { ...req.body },
+   );
+
     if (updatedUser) {
       res.status(200).json(updatedUser);
     } else {
       res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Failed to update User" });
+    res.status(500).json({ message: "Failed to update user" });
   }
 };
 
