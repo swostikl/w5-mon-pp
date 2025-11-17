@@ -30,9 +30,9 @@ const getUserById = async (req, res) => {
   }
 
   try {
-    const User = await User.findById(userId);
-    if (User) {
-      res.status(200).json(User);
+    const user = await User.findById(userId);
+    if (user) {
+      res.status(200).json(user);
     } else {
       res.status(404).json({ message: "User not found" });
     }
